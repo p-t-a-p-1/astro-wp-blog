@@ -1,23 +1,9 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "@/layouts/Layout.astro";
 import BlogCard from "@/components/elements/BlogCard";
-import type { WP_REST_API_Post } from "wp-types";
+import { fetchAllBlogPosts } from "./[slug].astro";
 
-export type blogPost = WP_REST_API_Post & {
-	_embedded: {
-		"wp:featuredmedia": {
-			source_url: string;
-		}[];
-	};
-};
-
-export const fetchLatestBlogPosts = async (): Promise<blogPost[]> => {
-	return await fetch(
-		`${import.meta.env.PUBLIC_WP_API}/blog?_embed&author=3&per_page=4`,
-	).then((response) => response.json());
-};
-
-const articles = await fetchLatestBlogPosts();
+const articles = await fetchAllBlogPosts();
 ---
 
 <Layout>
