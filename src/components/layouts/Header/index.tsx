@@ -2,6 +2,7 @@ import { Icons } from "@/components/elements/Icons";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { MainNav } from "../MainNav";
+import SearchButton from "@/components/elements/SearchButton";
 
 export default function Header() {
 	return (
@@ -9,6 +10,7 @@ export default function Header() {
 			<div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0 mx-auto">
 				<MainNav items={siteConfig.mainNav} />
 				<div className="flex flex-1 items-center justify-end space-x-4">
+					<SearchButton />
 					<nav className="flex items-center space-x-1">
 						<a href={siteConfig.links.github} target="_blank" rel="noreferrer">
 							<div

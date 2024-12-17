@@ -25,10 +25,81 @@ const { post } = Astro.props;
 ---
 
 <Layout>
-  <section class="container grid items-center gap-6 pb-8 pt-6 md:py-10 mx-auto">
-    <h1 class="text-2xl font-bold">{post.title.rendered}</h1>
-    <a href="/blog" class="text-blue-500">
-      一覧に戻る
-    </a>
+	<section class="container grid items-center gap-6 pb-8 pt-6 md:py-10 mx-auto max-w-3xl">
+		<h1 class="text-2xl font-bold">{post.title.rendered}</h1>
+		<div class="blogContent" set:html={post.content.rendered}></div>
+		<div class="flex justify-center">
+			<a href="/blog" class="text-blue-500">
+				一覧に戻る
+			</a>
+		</div>
   </section>
 </Layout>
+
+<style>
+	/* ブログ本文用にblogContent内はタグ指定 */
+	.blogContent {
+		line-height: 1.75;
+	}
+	.blogContent :global(h2) {
+		margin-top: 2rem;
+		font-size: 1.5rem;
+		font-weight: bold;
+	}
+	.blogContent :global(h3) {
+		margin-top: 1.5rem;
+		font-size: 1.25rem;
+		font-weight: bold;
+	}
+	.blogContent :global(h4) {
+		margin-top: 1rem;
+		font-size: 1rem;
+		font-weight: bold;
+	}
+	.blogContent :global(h5) {
+		font-size: 0.875rem;
+	}
+	.blogContent :global(h6) {
+		font-size: 0.75rem;
+	}
+	.blogContent :global(p) {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+	.blogContent :global(ul) {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+	.blogContent :global(ol) {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+	.blogContent :global(li) {
+		margin-top: 0.5rem;
+		margin-bottom: 0.5rem;
+	}
+	.blogContent :global(a) {
+		color: #3182ce;
+	}
+	.blogContent :global(a:hover) {
+		color: #2c5282;
+	}
+	.blogContent :global(img) {
+		max-width: 100%;
+	}
+	.blogContent :global(pre) {
+		background-color: #f6f8fa;
+		padding: 1rem;
+		border-radius: 0.5rem;
+	}
+	.blogContent :global(code) {
+		background-color: #f6f8fa;
+		padding: 0.25rem;
+		border-radius: 0.25rem;
+	}
+	.blogContent :global(blockquote) {
+		border-left: 0.25rem solid #3182ce;
+		padding-left: 1rem;
+	}
+
+</style>
