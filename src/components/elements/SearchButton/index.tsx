@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Icons } from "../Icons";
-import { useState } from "react";
 import { Form, FormField } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,9 +11,6 @@ const formSchema = z.object({
 });
 
 export default function SearchButton() {
-	// submitクリック後、/blog/search?q=検索ワード に遷移する
-	// 例: /blog/search?q=sample
-
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -23,9 +19,10 @@ export default function SearchButton() {
 	});
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values);
+		if (!values.q) return;
+
+		// ページ遷移
+		window.location.href = `/blog/search?q=${values.q}`;
 	}
 
 	return (

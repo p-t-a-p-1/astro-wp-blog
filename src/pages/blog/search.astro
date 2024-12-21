@@ -1,7 +1,54 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import type { blogPost } from "../index.astro";
+import BlogCard from "@/components/elements/BlogCard";
+
+export const fetchSearchBlogPosts = async (
+	keyword: string,
+): Promise<blogPost[]> => {
+	// keywordが空文字の場合は全件取得
+	const search = keyword ? `&search=${keyword}` : "";
+
+	return await fetch(
+		`${import.meta.env.PUBLIC_WP_API}/blog?_embed&author=3&per_page=100${search}`,
+	).then((response) => response.json());
+};
+
+// 検索
+let q = "";
+try {
+	if (Astro.request.method === "GET") {
+		const url = new URL(Astro.request.url);
+		const params = new URLSearchParams(url.search);
+		q = params.get("q") || "";
+	}
+} catch (error) {
+	console.error(error);
+}
+
+const articles = await fetchSearchBlogPosts(q);
+
+export const prerender = false;
 ---
 
 <Layout>
-  <div>aaa</div>
+  <section class="container grid items-center gap-6 pb-8 pt-6 md:py-10 mx-auto">
+		<h1 class="text-2xl font-bold">「{q}」の検索結果</h1>
+		<div class="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-4">
+			{articles.map((article) => {
+				return (
+					<BlogCard
+						url={`/blog/${article.slug}`}
+						imgSrc={article._embedded['wp:featuredmedia'][0].source_url}
+						title={article.title.rendered}
+					/>
+				)
+			}) || (
+        // notfournd
+        <div class="text-center">
+          <p>記事が見つかりませんでした。</p>
+        </div>
+      )}
+		</div>
+	</section>
 </Layout>

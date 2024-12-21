@@ -87,10 +87,16 @@ const { post } = Astro.props;
 	.blogContent :global(img) {
 		max-width: 100%;
 	}
+/* video */
+	.blogContent :global(figure) {
+		max-width: 100%;
+	}
 	.blogContent :global(pre) {
 		background-color: #f6f8fa;
 		padding: 1rem;
 		border-radius: 0.5rem;
+		max-width: 100%;
+		white-space: pre-wrap;
 	}
 	.blogContent :global(code) {
 		background-color: #f6f8fa;
